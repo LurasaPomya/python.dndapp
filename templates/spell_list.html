@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Spell List{% endblock %}
+{% block head %}
+    {{ super() }}
+    <!-- TableSorter js File -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.tablesorter.js') }}"></script>
+    <!-- My Customer js File -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.tablesorter.js') }}"></script>
+    <!-- Table Sorter Plugin -->
+    <script type="text/javascript" id="js">
+        $(document).ready(function() {
+            $("table").tablesorter();
+            $("#level-link").click(function() {
+                var sorting = [[1,0]];
+                sortTableBy(sorting);
+                setCookie("lastSort", "level", 365)
+                return false;
+            });
+            $("#name-link").click(function() {
+                var sorting = [[0,0]];
+                sortTableBy(sorting);
+                setCookie("lastSort", "name", 365)
+                return false;
+            });
+            $("#school-link").click(function() {
+                var sorting = [[2,0],[1,0],[0,0]];
+                sortTableBy(sorting);
+                setCookie("lastSort", "school", 365)
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    Sort By Class:<br />
+        <div class="btn-group" role="group" aria-label="...">
+            <a class='btn btn-default' href="{{ url_for('spell_list') }}" role="button">All Spells</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Bard') }}" role="button">Bard</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Cleric') }}" role="button">Cleric</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Druid') }}" role="button">Druid</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Paladin') }}" role="button">Paladin</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Ranger') }}" role="button">Ranger</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Sorcerer') }}" role="button">Sorcerer</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Warlock') }}" role="button">Warlock</a>
+            <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Wizard') }}" role="button">Wizard</a>
+        </div>
+        <br />
+        <div class="btn-group" role="group" aria-label="...">
+            <a class='btn btn-default' id="level-link" href="#" role="button">By Level</a>
+            <a class='btn btn-default' id="name-link" href="#" role="button">By Name</a>
+            <a class='btn btn-default' id="school-link" href="#" role="button">By School</a>
+        </div>
+        <br />
+        <table id="table" class="tablesorter table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>School</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if char_class %}
+                    <tr><td><a href="{{ url_for('spell_desc', spell_name='Test Spell') }}">Test Spell for {{ char_class }}</a></td><td>1</td><td>Conjuration</td></tr>
+                {% else %}
+                    <tr><td><a href="{{ url_for('spell_desc', spell_name='Test Spell') }}">Test Spell</a></td><td>1</td><td>Conjuration</td></tr>
+                {% endif %}
+            </tbody>
+        </table>
+{% endblock %}
