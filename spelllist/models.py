@@ -1,4 +1,4 @@
-from dndapp import db
+from spelllist import db
 
 
 class User(db.Model):

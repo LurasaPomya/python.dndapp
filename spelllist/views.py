@@ -1,6 +1,6 @@
-from dndapp import app, db
+from spelllist import app, db
 from flask import render_template
-from dndapp.models import User
+from spelllist.models import User
 
 
 @app.route('/testing')

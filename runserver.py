@@ -1,3 +1,3 @@
-from dndapp import app
+from spelllist import app
 
 app.run()
