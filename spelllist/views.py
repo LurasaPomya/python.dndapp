@@ -1,25 +1,13 @@
-from spelllist import app, db
+from spelllist import app
 from flask import render_template
-from spelllist.models import User
+from sqlalchemy import create_engine
+
+eng = create_engine(app.config.get('SQLALCHEMY_DATABASE_URI'))
 
 
 @app.route('/testing')
 def testing():
     return app.config.get("TEST_VAR")
-
-
-@app.route('/createdb')
-def createdb():
-    db.create_all()
-    return "Database Created!"
-
-
-@app.route('/createuser/<username>/<email>')
-def create_user(username, email):
-    temp_user = User(username, email)
-    db.session.add(temp_user)
-    db.session.commit()
-    return "User Created!"
 
 
 @app.route('/userlist')
