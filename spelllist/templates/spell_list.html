@@ -61,11 +61,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% if char_class %}
-                    <tr><td><a href="{{ url_for('spell_desc', spell_name='Test Spell') }}">Test Spell for {{ char_class }}</a></td><td>1</td><td>Conjuration</td></tr>
-                {% else %}
-                    <tr><td><a href="{{ url_for('spell_desc', spell_name='Test Spell') }}">Test Spell</a></td><td>1</td><td>Conjuration</td></tr>
-                {% endif %}
+                {% for row in data %}
+                    <tr><td>{{ row['name'] }}</td><td>{{ row['level'] }}</td><td>{{ row['school'] }}</td></tr>
+                {% endfor %}
             </tbody>
         </table>
 {% endblock %}

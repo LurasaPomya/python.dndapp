@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="MySQL - dndapp@localhost" uuid="ccc49aec-97ad-435a-a032-049b21ea950b">
-    <database-info product="MySQL" version="5.7.11-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+    <database-info product="MySQL" version="5.5.47-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
-    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
     <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
       <schema id="1" name="dndapp"/>
       <table id="2" parent="1" name="characters"/>
@@ -183,40 +183,49 @@
         <columns>_id</columns>
         <primary>1</primary>
       </key>
-      <column id="53" parent="6" name="_id">
+      <column id="53" parent="6" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="54" parent="6" name="username">
-        <mandatory>1</mandatory>
-        <data-type>varchar(60)</data-type>
+      <column id="54" parent="6" name="date_created">
+        <data-type>datetime</data-type>
       </column>
-      <column id="55" parent="6" name="password">
+      <column id="55" parent="6" name="date_modified">
+        <data-type>datetime</data-type>
+      </column>
+      <column id="56" parent="6" name="username">
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="57" parent="6" name="email">
+        <mandatory>1</mandatory>
+        <data-type>varchar(128)</data-type>
+      </column>
+      <column id="58" parent="6" name="password">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="56" parent="6" name="level">
+      <column id="59" parent="6" name="active">
         <mandatory>1</mandatory>
-        <data-type>int(1)</data-type>
-        <default-expression>&apos;0&apos;</default-expression>
+        <data-type>smallint(6)</data-type>
       </column>
-      <index id="57" parent="6" name="username">
-        <columns>username</columns>
+      <column id="60" parent="6" name="role">
+        <mandatory>1</mandatory>
+        <data-type>smallint(6)</data-type>
+      </column>
+      <index id="61" parent="6" name="email">
+        <columns>email</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <index id="58" parent="6" name="_id">
-        <columns>_id</columns>
-        <desc-columns></desc-columns>
-      </index>
-      <key id="59" parent="6" name="PRIMARY">
-        <columns>_id</columns>
-        <primary>1</primary>
+      <key id="62" parent="6" name="email">
+        <columns>email</columns>
+        <underlying-index>email</underlying-index>
       </key>
-      <key id="60" parent="6" name="username">
-        <columns>username</columns>
-        <underlying-index>username</underlying-index>
+      <key id="63" parent="6" name="PRIMARY">
+        <columns>id</columns>
+        <primary>1</primary>
       </key>
     </database-model>
   </data-source>
