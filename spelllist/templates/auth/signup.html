@@ -37,7 +37,7 @@
             {% endif %}
             <form method="POST" action="." accept-charset="UTF-8" role="form">
                 {{ form.csrf_token }}
-                {{ render_field(form.username, placeholder="Your Username", authofocus="") }}
+                {{ render_field(form.username, placeholder="Your Username", autofocus="") }}
                 {{ render_field(form.email, placeholder="Your Email Address") }}
                 {{ render_field(form.password, placeholder="Password") }}
                 <button type="submit" name="submit">Sign up</button>
