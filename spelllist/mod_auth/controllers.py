@@ -30,20 +30,20 @@ def signin():
 
     return render_template("auth/signin.html", form=form)
 
-# @mod_auth.route('/createuser/', methods=['GET', 'POST'])
-# def createuser():
-# 
-#     # Check if form submitted
-#     form = CreateUserForm(request.form)
-#
-#     if form.validate_on_submit():
-#         password = generate_password_hash(form.password.data)
-#         user = User('dectala', form.email.data, password)
-#         user.active = 0
-#         user.role = 0
-#         db.session.add(user)
-#         db.session.commit()
-#
-#         return "User Added"
-#
-#     return render_template("auth/signup.html", form=form)
+@mod_auth.route('/createuser/', methods=['GET', 'POST'])
+def createuser():
+
+    # Check if form submitted
+    form = CreateUserForm(request.form)
+    if form.validate_on_submit():
+        password = generate_password_hash(form.password.data)
+        user = User('dectala', form.email.data, password)
+        user.active = 0
+        user.role = 0
+        db.session.add(user)
+        db.session.commit()
+
+        return "User Added"
+
+
+    return render_template("auth/signup.html", form=form)
