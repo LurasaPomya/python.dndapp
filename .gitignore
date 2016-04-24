@@ -63,3 +63,6 @@ target/
 
 #config file
 config.py
+
+#virtual environmen
+vent/

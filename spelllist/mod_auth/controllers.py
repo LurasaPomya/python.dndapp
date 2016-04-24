@@ -37,7 +37,7 @@ def createuser():
     form = CreateUserForm(request.form)
     if form.validate_on_submit():
         password = generate_password_hash(form.password.data)
-        user = User('dectala', form.email.data, password)
+        user = User(form.username.data, form.email.data, password)
         user.active = 0
         user.role = 0
         db.session.add(user)
