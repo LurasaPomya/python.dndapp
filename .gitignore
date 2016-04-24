@@ -66,3 +66,6 @@ config.py
 
 #virtual environmen
 venv/
+
+#idea folder
+.idea/
