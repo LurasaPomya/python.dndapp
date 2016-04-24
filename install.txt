@@ -1,0 +1,9 @@
+Required Software:
+
+MySQL: mysql-server
+MySQL Dev: libmysqlclient-dev
+Python 2.7+
+python-pip
+
+
+See pip requirements in the requirements.txt file

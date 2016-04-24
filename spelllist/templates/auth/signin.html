@@ -18,11 +18,11 @@
             <legend>Sign in</legend>
             {% with errors = get_flashed_messages(category_filter=["error"]) %}
                 {% if errors %}
-                    <div>
-                        {% for error in errors %}
-                            {{ error }}<br>
-                        {% endfor %}
-                    </div>
+                    <ul class=flashes>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                    </ul>
                 {% endif %}
             {% endwith %}
 

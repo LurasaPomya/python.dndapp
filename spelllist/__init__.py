@@ -1,11 +1,18 @@
 from flask import Flask
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__)
 app.config.from_object('config')
 
 db = SQLAlchemy(app)
+
+lm = LoginManager()
+lm.init_app(app)
+
+
 
 # import here to prevent circular imports
 from spelllist.mod_auth.controllers import mod_auth as auth_module

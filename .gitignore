@@ -65,4 +65,4 @@ target/
 config.py
 
 #virtual environmen
-vent/
+venv/
