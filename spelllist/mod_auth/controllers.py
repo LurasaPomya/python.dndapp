@@ -12,11 +12,11 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('auth.signin'))
+    return redirect(url_for('auth.login'))
 
 
 @mod_auth.route('/signin/', methods=['GET', 'POST'])
-def signin():
+def login():
 
     # If sign in form is submitted
     form = LoginForm(request.form)
@@ -29,21 +29,25 @@ def signin():
         if user and check_password_hash(user.password, form.password.data):
 
             session['user_id'] = user.id
-            user.authenticated = True
-            user.anonymous = False
-            login_user(user)
+            session['username'] = user.username;
+            session['user_level'] = user.role
+
+            if request.form.get('remember_me'):
+                login_user(user, remember=True)
+            else:
+                login_user(user)
 
             next = request.args.get('next')
 
-            return redirect(url_for('spell_list'))
+            return redirect(next or url_for('spell_list'))
 
         flash('Wrong email or password', 'error')
 
-    return render_template("auth/signin.html", form=form)
+    return render_template("auth/login.html", form=form)
 
 @mod_auth.route('/createuser/', methods=['GET', 'POST'])
 @login_required
-def createuser():
+def create_user():
 
     # Check if form submitted
     form = CreateUserForm(request.form)
@@ -59,3 +63,7 @@ def createuser():
 
 
     return render_template("auth/signup.html", form=form)
+
+def check_user_level(user_id):
+    user = User.query.filter_by(id=user_id)
+    return user.role

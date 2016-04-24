@@ -1,6 +1,14 @@
-DEBUG = True  # Set to False if in production!!
+DEBUG = True # REMOVE BEFORE PRODUCTION
 
-SQLALCHEMY_DATABASE_URI = "mysql://username:password@localhost/database-name"
+# Database login String
+SQLALCHEMY_DATABASE_URI = "mysql://username:password@localhost/database"
 
+# Other DB Settings
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# Form Stuff
 WTF_CSRF_ENABLED = True
-SECRET_KEY = 'you-will-never-guess'
+SECRET_KEY = 'make-me-special'
+
+# Session Management Stuff
+REMEMBER_COOKIE_NAME = "make-a-token-name"

@@ -18,8 +18,6 @@ class User(Base, UserMixin):
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, default=True)
     role = db.Column(db.SmallInteger, nullable=False, default=0)
-    authenticated = db.Column(db.Boolean, default=False)
-    anonymous = True
 
 
     def __init__(self, username, email, password):
@@ -27,26 +25,23 @@ class User(Base, UserMixin):
         self.email = email
         self.password = password
 
+class Spell(Base):
 
-def __repr__(self):
-    return '<User %r>' % self.username
+    __tablename = 'spells'
 
-
-def get_id(self):
-    return self.email
-
-
-@property
-def is_active(self):
-    # True, as all users are active.
-    return True
-
-@property
-def is_authenticated(self):
-    return self.authenticated
-
-
-@property
-def is_anonymous(self):
-    return self.anonomous
-
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    level = db.Column(db.SmallInteger, nullable=False)
+    school = db.Column(db.String(255), nullable=False)
+    spell_class = db.Column(db.String(255), nullable=False)
+    casting_time = db.Column(db.String(255), nullable=False)
+    spell_range = db.Column(db.String(50))
+    duration = db.Column(db.String(50))
+    page = db.Column(db.String(10))
+    saving_throw = db.Column(db.String(25))
+    damage_type = db.Column(db.String(50))
+    damage = db.Column(db.String(50))
+    description = db.Column(db.Text)
+    at_higher = db.Column(db.Text)
+    
+    ritual = db.Column(db.Boolean, default=False)
+    concentration = db.Column(db.Boolean, default=False)
