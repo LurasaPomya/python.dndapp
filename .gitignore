@@ -67,5 +67,4 @@ config.py
 #virtual environment
 venv/
 
-#pyCharm Folder
-.idea
+.idea/
