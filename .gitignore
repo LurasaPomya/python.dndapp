@@ -64,5 +64,8 @@ target/
 #config file
 config.py
 
-#virtual environmen
+#virtual environment
 venv/
+
+#pyCharm Folder
+.idea
