@@ -1,9 +1,32 @@
 Required Software:
 
-MySQL: mysql-server
-MySQL Dev: libmysqlclient-dev
+Nginx
+MySQL
+MySQL Dev
 Python 2.7+
 python-pip
-
+virtualenv
 
 See pip requirements in the requirements.txt file
+
+1. Install Required software after updating OS
+    sudo apt-get install mysql-server libmysqlclient-dev python-pip python-dev nginx
+
+2. Make project volder from cloned repo
+    git clone git@github.com:dectala/pydndapp.git
+    cd pydndapp
+
+3. Install virtualenv and setup one for project
+    sudo pip install virtualenv
+    virtualenv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+
+4. Setup UWSGI
+    pip install uwsgi
+    Move dndapp.conf to /etc/init/
+
+5. Setup nginx
+    Move dndapp-nginx.conf to /etc/nginx/sites-enabled/
+    Modify to fit your domain
+
