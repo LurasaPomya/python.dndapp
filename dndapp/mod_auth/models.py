@@ -1,4 +1,4 @@
-from spelllist import db
+from dndapp import db
 from flask_login import UserMixin
 
 # Base Class

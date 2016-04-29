@@ -1,4 +1,4 @@
-from spelllist import db
+from dndapp import db
 
 # Base Class
 class Base(db.Model):

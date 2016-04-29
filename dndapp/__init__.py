@@ -15,12 +15,16 @@ lm.init_app(app)
 
 
 # import here to prevent circular imports
-from spelllist.mod_auth.controllers import mod_auth as auth_module
+from dndapp.mod_auth.controllers import mod_auth as auth_module
+from dndapp.mod_spelllist.controllers import mod_spells as spell_module
+
 app.register_blueprint(auth_module)
+app.register_blueprint(spell_module)
+
 
 # Creates db's if we need them
 db.create_all()
 
 # import here to prevent circular imports
-import spelllist.views
+import dndapp.views
 

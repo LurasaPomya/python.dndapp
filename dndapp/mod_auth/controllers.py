@@ -1,9 +1,9 @@
 from flask import Blueprint, request, render_template, \
     flash, g, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
-from spelllist import db, lm
-from spelllist.mod_auth.forms import LoginForm, CreateUserForm
-from spelllist.mod_auth.models import User
+from dndapp import db, lm
+from dndapp.mod_auth.forms import LoginForm, CreateUserForm
+from dndapp.mod_auth.models import User
 from flask_login import login_user, login_required, logout_user
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
@@ -40,7 +40,7 @@ def login():
 
             next = request.args.get('next')
 
-            return redirect(next or url_for('spell_list'))
+            return redirect(next or url_for('spells.spell_list'))
 
         flash('Wrong email or password', 'error')
 
