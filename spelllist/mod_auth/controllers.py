@@ -12,6 +12,7 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
 @login_required
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('auth.login'))
 
 
@@ -24,7 +25,7 @@ def login():
     # Verify the sign in form
     if form.validate_on_submit():
 
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(username=form.username.data).first()
 
         if user and check_password_hash(user.password, form.password.data):
 
@@ -49,17 +50,23 @@ def login():
 @login_required
 def create_user():
 
-    # Check if form submitted
-    form = CreateUserForm(request.form)
-    if form.validate_on_submit():
-        password = generate_password_hash(form.password.data)
-        user = User(form.username.data, form.email.data, password)
-        user.active = True
-        user.role = 0
-        db.session.add(user)
-        db.session.commit()
+    user = User.query.filter_by(id=session['user_id']).first()
 
-        return "User Added"
+
+    if user.role  == 0:
+        # Check if form submitted
+        form = CreateUserForm(request.form)
+        if form.validate_on_submit():
+            password = generate_password_hash(form.password.data)
+            user = User(form.username.data, form.email.data, password)
+            user.active = True
+            user.role = 1
+            db.session.add(user)
+            db.session.commit()
+
+            return "User Added"
+    else:
+        return "You can't do this!"
 
 
     return render_template("auth/signup.html", form=form)

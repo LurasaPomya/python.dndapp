@@ -2,34 +2,6 @@
 {% block title %}Spell List{% endblock %}
 {% block head %}
     {{ super() }}
-    <!-- TableSorter js File -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.tablesorter.js') }}"></script>
-    <!-- My Customer js File -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.tablesorter.js') }}"></script>
-    <!-- Table Sorter Plugin -->
-    <script type="text/javascript" id="js">
-        $(document).ready(function() {
-            $("table").tablesorter();
-            $("#level-link").click(function() {
-                var sorting = [[1,0]];
-                sortTableBy(sorting);
-                setCookie("lastSort", "level", 365)
-                return false;
-            });
-            $("#name-link").click(function() {
-                var sorting = [[0,0]];
-                sortTableBy(sorting);
-                setCookie("lastSort", "name", 365)
-                return false;
-            });
-            $("#school-link").click(function() {
-                var sorting = [[2,0],[1,0],[0,0]];
-                sortTableBy(sorting);
-                setCookie("lastSort", "school", 365)
-                return false;
-            });
-        });
-    </script>
 {% endblock %}
 
 {% block content %}
@@ -46,12 +18,6 @@
             <a class='btn btn-default' href="{{ url_for('spell_list', char_class='Wizard') }}" role="button">Wizard</a>
         </div>
         <br />
-        <div class="btn-group" role="group" aria-label="...">
-            <a class='btn btn-default' id="level-link" href="#" role="button">By Level</a>
-            <a class='btn btn-default' id="name-link" href="#" role="button">By Name</a>
-            <a class='btn btn-default' id="school-link" href="#" role="button">By School</a>
-        </div>
-        <br />
         <table id="table" class="tablesorter table">
             <thead>
                 <tr>
@@ -61,8 +27,8 @@
                 </tr>
             </thead>
             <tbody>
-                {% for row in data %}
-                    <tr><td>{{ row['name'] }}</td><td>{{ row['level'] }}</td><td>{{ row['school'] }}</td></tr>
+                {% for spell in spells %}
+                    <tr><td><a href=" {{ url_for('spell_desc', spell_name=spell.name) }} ">{{ spell.name }}</a></td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
                 {% endfor %}
             </tbody>
         </table>

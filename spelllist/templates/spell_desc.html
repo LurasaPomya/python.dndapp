@@ -1,5 +1,43 @@
 {% extends "base.html" %}
-{% block title %}{{ spell_name }}{% endblock %}
+{% block title %}{{ spell.name }}{% endblock %}
 {% block content %}
-    <p>This should show you the spell {{ spell_name }}, but currently it doesn't does it. OH WELL!</p>
+    <h3>{{ spell.name }}</h3>
+    <br />
+    <span class='label label-info'>Pg.{{ spell.page }}</span>
+    <br />
+    {% if spell.level == 0 %}
+        {{ spell.school }} cantrip
+    {% endif %}
+    <br />
+    <u>Casting Time:</u> {{ spell.casting_time }}
+    <br />
+    <u>Range:</u> {{ spell.spell_range }}
+    <br />
+    <u>Components:</u>
+    {% if spell.v_comp %}
+        V
+    {% endif %}
+    {% if spell.m_comp %}
+        ,M
+    {% endif %}
+    {% if spell.s_comp %}
+        ,S
+    {% endif %}
+    <br />
+    <u>Duration:</u> {{ spell.duration }}
+    <br />
+    <u>Damage:</u> {{ spell.damage }}
+    <br />
+    <u>Usable by:</u> {{ spell.spell_class }}
+    <br />
+    <u>Description:</u>
+    <br />
+     {{ spell.description }}
+    <br />
+    {% if spell.at_higher %}
+        <u>At Higher Levels:</u>
+        <br />
+        {{ spell.at_higher }}
+    {% endif %}
+    </div>
 {% endblock %}
