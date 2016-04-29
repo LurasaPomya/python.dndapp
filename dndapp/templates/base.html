@@ -42,7 +42,7 @@
 		<!-- BEGIN MAIN CONTAINER -->
 		<div class="container">
         {% if session['username'] %}
-            <div id="username">Logged in as {{ session['username'] }}</div>
+            <div id="username">Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)</div>
         {% else %}
             <div id=""username">Hello Anon!</div>
         {% endif %}

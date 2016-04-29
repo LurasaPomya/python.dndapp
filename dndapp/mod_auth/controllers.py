@@ -1,10 +1,11 @@
 from flask import Blueprint, request, render_template, \
     flash, g, session, redirect, url_for
+from flask_login import login_user, login_required, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from dndapp import db, lm
-from dndapp.mod_auth.forms import LoginForm, CreateUserForm
+from dndapp.mod_auth.forms import LoginForm, CreateUserForm, ChangeUserPassword
 from dndapp.mod_auth.models import User
-from flask_login import login_user, login_required, logout_user
+
 
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -30,7 +31,7 @@ def login():
         if user and check_password_hash(user.password, form.password.data):
 
             session['user_id'] = user.id
-            session['username'] = user.username;
+            session['username'] = user.username
             session['user_level'] = user.role
 
             if request.form.get('remember_me'):
@@ -71,6 +72,24 @@ def create_user():
 
     return render_template("auth/signup.html", form=form)
 
-def check_user_level(user_id):
-    user = User.query.filter_by(id=user_id)
-    return user.role
+@mod_auth.route('/change_password/', methods=['GET', 'POST'])
+@login_required
+def change_user_password():
+
+    form = ChangeUserPassword(request.form)
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(id=session['user_id']).first()
+
+        if form.new_password.data != form.new_password_repeat.data:
+            return " New passwords do not match, try again!"
+
+        if check_password_hash(user.password, form.current_password.data):
+            user.password = generate_password_hash(form.new_password.data)
+            db.session.commit()
+            return "User Updated!"
+        else:
+            return "Wrong Current Password"
+
+    return render_template("auth/changepass.html", form=form)
+

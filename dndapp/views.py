@@ -14,3 +14,7 @@ def index():
 @lm.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+def check_user_level(user_id):
+    user = User.query.filter_by(id=user_id)
+    return user.role
