@@ -31,7 +31,7 @@ See pip requirements in the requirements.txt file
     Modify to fit your domain
 
 6. Setup MySQL
-    Create user "CREATE USER 'dndapp'@'localhost' IDENTIFIED BY 'PASSWORD HERE';"
+    Create user "CREATE USER 'dndapp'@'localhost' IDENTIFIED BY 'FgJDRSypuq';"
     Create Database "CREATE DATABASE dndapp;"
     Grant privs. "GRANT ALL PRIVILEGES ON dndapp.* TO 'dndapp'@'localhost';"
     Flush those privs. "FLUSH PRIVILIGES;"
