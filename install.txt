@@ -22,22 +22,4 @@ See pip requirements in the requirements.txt file
     source venv/bin/activate
     pip install -r requirements.txt
 
-4. Setup UWSGI
-    pip install uwsgi
-    Move dndapp.conf to /etc/init/
-
-5. Setup nginx
-    Move dndapp-nginx.conf to /etc/nginx/sites-enabled/
-    Modify to fit your domain
-
-6. Setup MySQL
-    Create user "CREATE USER 'dndapp'@'localhost' IDENTIFIED BY 'FgJDRSypuq';"
-    Create Database "CREATE DATABASE dndapp;"
-    Grant privs. "GRANT ALL PRIVILEGES ON dndapp.* TO 'dndapp'@'localhost';"
-    Flush those privs. "FLUSH PRIVILIGES;"
-
-    Import Database if you have it mysql -u dndapp -p dndapp < sql.sql
-
-You should be good to go!
-
 
