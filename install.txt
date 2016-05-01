@@ -21,5 +21,6 @@ See pip requirements in the requirements.txt file
     virtualenv venv
     source venv/bin/activate
     pip install -r requirements.txt
+    pip install uwsgi
 
 
