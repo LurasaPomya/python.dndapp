@@ -61,7 +61,7 @@ def create_user():
             password = generate_password_hash(form.password.data)
             user = User(form.username.data, form.email.data, password)
             user.active = True
-            user.role = 1
+            user.role = 5
             db.session.add(user)
             db.session.commit()
 
@@ -72,7 +72,7 @@ def create_user():
 
     return render_template("auth/signup.html", form=form)
 
-@mod_auth.route('/change_password/', methods=['GET', 'POST'])
+@mod_auth.route('/user/change_password/', methods=['GET', 'POST'])
 @login_required
 def change_user_password():
 
@@ -92,4 +92,17 @@ def change_user_password():
             return "Wrong Current Password"
 
     return render_template("auth/changepass.html", form=form)
+
+@mod_auth.route('/user/list/')
+@login_required
+def list_users():
+
+    user = User.query.filter_by(id=session['user_id']).first()
+    if user.role == 0:
+        users = User.query.all()
+
+        return render_template('auth/user_list.html',users=users)
+    else:
+        return "You can't do this!"
+
 

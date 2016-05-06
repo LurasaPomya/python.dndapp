@@ -1,5 +1,6 @@
 from dndapp.mod_spelllist.models import Spell
-from flask import render_template, Blueprint
+from dndapp.mod_auth.models import User
+from flask import render_template, Blueprint, session
 from flask_login import login_required
 
 
@@ -16,7 +17,14 @@ def spell_list(char_class=None):
     else:
         spells = Spell.query.filter(Spell.spell_class.contains(char_class)).order_by(Spell.level)
 
-    return render_template('spelllist/spell_list.html', spells=spells)
+    user = User.query.filter_by(id=session['user_id']).first()
+
+    if user.role < 5:
+        show_desc = True
+    else:
+        show_desc = False
+
+    return render_template('spelllist/spell_list.html', spells=spells,show_desc=show_desc)
 
 @mod_spells.route('/spell/<spell_name>')
 def spell_desc(spell_name=None):

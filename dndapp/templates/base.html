@@ -32,6 +32,7 @@
                         {% if current_user.is_authenticated %}
                             <li class=""><a href="{{ url_for('spells.spell_list') }}">Spell list</a></li>
                             <li class=""><a href="{{ url_for('auth.create_user') }}">Create User</a></li>
+                            <li class=""><a href="{{ url_for('auth.list_users') }}">User List</a></li>
                             <li class=""><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
                         {% endif %}
 					</ul>
@@ -43,8 +44,6 @@
 		<div class="container">
         {% if session['username'] %}
             <div id="username">Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)</div>
-        {% else %}
-            <div id=""username">Hello Anon!</div>
         {% endif %}
 			{%  block content %}
             {% endblock %}
