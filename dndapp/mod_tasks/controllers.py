@@ -39,3 +39,16 @@ def add_task():
 
             return redirect(url_for('tasks.list_tasks'))
     return render_template("tasks/create_task.html", form=form)
+
+@mod_tasks.route('/modify_task/del/<taskid>')
+@login_required
+def del_task(taskid=None):
+
+    if taskid == None:
+        return "Error!"
+    else:
+        task = Task.query.filter_by(id=taskid).first()
+        db.session.delete(task)
+        db.session.commit()
+
+        return redirect(url_for('tasks.list_tasks'))

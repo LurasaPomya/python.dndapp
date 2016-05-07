@@ -59,13 +59,12 @@ def create_user():
         form = CreateUserForm(request.form)
         if form.validate_on_submit():
             password = generate_password_hash(form.password.data)
-            user = User(form.username.data, form.email.data, password)
+            user = User(form.username.data, form.email.data, password, form.access_level.data)
             user.active = True
-            user.role = 5
             db.session.add(user)
             db.session.commit()
 
-            return "User Added"
+            return redirect(url_for('auth.list_users'))
     else:
         return "You can't do this!"
 
@@ -105,4 +104,15 @@ def list_users():
     else:
         return "You can't do this!"
 
+@mod_auth.route('/user/del/<userid>')
+@login_required
+def del_user(userid=None):
+    if userid is None:
+        return redirect(url_for('auth.list_users'))
+    else:
+        user = User.query.filter_by(id=userid).first()
+        db.session.delete(user)
+        db.session.commit()
+
+        return redirect(url_for('auth.list_users'))
 

@@ -11,11 +11,12 @@
                     <th>Username</th>
                     <th>Email</th>
                     <th>Access Level</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {% for user in users %}
-                    <tr><td>{{ user.username }}</td><td>{{ user.email }}</td><td>{{ user.role }}</td></tr>
+                    <tr><td>{{ user.username }}</td><td>{{ user.email }}</td><td>{{ user.role }}</td><td><a href="{{ url_for('auth.del_user', userid = user.id) }}">Delete</a></td></tr>
                 {% endfor %}
             </tbody>
         </table>

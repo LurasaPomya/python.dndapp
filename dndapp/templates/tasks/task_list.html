@@ -15,7 +15,7 @@
             </thead>
             <tbody>
                 {% for task in task_list %}
-                    <tr><td>{{ task.title }}</td><td>{{ task.description }}</td><td>{{ task.priority }}</td></tr>
+                    <tr><td><a href="{{ url_for('tasks.del_task', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td></tr>
                 {% endfor %}
                 <br />
                 <a href="{{ url_for('tasks.add_task') }}">Add Task</a>

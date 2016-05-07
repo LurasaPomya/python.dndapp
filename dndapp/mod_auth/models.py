@@ -20,7 +20,8 @@ class User(Base, UserMixin):
     role = db.Column(db.SmallInteger, nullable=False, default=0)
 
 
-    def __init__(self, username, email, password):
+    def __init__(self, username, email, password, access_level):
         self.username = username
         self.email = email
         self.password = password
+        self.role = access_level
