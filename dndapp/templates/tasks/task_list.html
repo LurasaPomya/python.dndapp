@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Task List{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+        <table id="table" class="tablesorter table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Priority</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in task_list %}
+                    <tr><td>{{ task.title }}</td><td>{{ task.description }}</td><td>{{ task.priority }}</td></tr>
+                {% endfor %}
+                <br />
+                <a href="{{ url_for('tasks.add_task') }}">Add Task</a>
+            </tbody>
+        </table>
+{% endblock %}
