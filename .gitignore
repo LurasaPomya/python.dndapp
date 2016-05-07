@@ -12,6 +12,7 @@ env/
 build/
 develop-eggs/
 dist/
+/spells.sql
 downloads/
 eggs/
 .eggs/
