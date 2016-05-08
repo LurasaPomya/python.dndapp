@@ -1,39 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Spell List{% endblock %}
 {% block head %}
-    {{ super() }}
+{{ super() }}
 {% endblock %}
-
 {% block content %}
-    Sort By Class:<br />
-        <div class="btn-group" role="group" aria-label="...">
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list') }}" role="button">All Spells</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Bard') }}" role="button">Bard</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Cleric') }}" role="button">Cleric</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Druid') }}" role="button">Druid</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Paladin') }}" role="button">Paladin</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Ranger') }}" role="button">Ranger</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Sorcerer') }}" role="button">Sorcerer</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Warlock') }}" role="button">Warlock</a>
-            <a class='btn btn-default' href="{{ url_for('spells.spell_list', char_class='Wizard') }}" role="button">Wizard</a>
-        </div>
-        <br />
-        <table id="table" class="tablesorter table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Level</th>
-                    <th>School</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for spell in spells %}
-                    {% if show_desc == True %}
-                        <tr><td><a href=" {{ url_for('spells.spell_desc', spell_name=spell.name) }} ">{{ spell.name }}</a></td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
-                    {% else %}
-                        <tr><td>{{ spell.name }}</td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
+Sort By Class:<br />
+<a href="{{ url_for('spells.spell_list') }}">All Spells</a>
+<a href="{{ url_for('spells.spell_list', char_class='Bard') }}">Bard</a>
+<a href="{{ url_for('spells.spell_list', char_class='Cleric') }}">Cleric</a>
+<a href="{{ url_for('spells.spell_list', char_class='Druid') }}">Druid</a>
+<a href="{{ url_for('spells.spell_list', char_class='Paladin') }}">Paladin</a>
+<a href="{{ url_for('spells.spell_list', char_class='Ranger') }}">Ranger</a>
+<a href="{{ url_for('spells.spell_list', char_class='Sorcerer') }}">Sorcerer</a>
+<a href="{{ url_for('spells.spell_list', char_class='Warlock') }}">Warlock</a>
+<a href="{{ url_for('spells.spell_list', char_class='Wizard') }}">Wizard</a>
+<br />
+<table id="table" class="tablesorter table">
+<thead>
+<tr>
+<th>Name</th>
+<th>Level</th>
+<th>School</th>
+</tr>
+</thead>
+<tbody>
+{% for spell in spells %}
+{% if show_desc == True %}
+<tr><td><a href=" {{ url_for('spells.spell_desc', spell_name=spell.name) }} ">{{ spell.name }}</a></td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
+{% else %}
+<tr><td>{{ spell.name }}</td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
+{% endif %}
+{% endfor %}
+</tbody>
+</table>
 {% endblock %}
