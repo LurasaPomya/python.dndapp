@@ -18,7 +18,9 @@
 <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
 {% endif %}
 </ul>
+{% if current_user.is_authenticated %}
 Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)</p>
+{% endif %}
 {%  block content %}
 {% endblock %}
 </body>
