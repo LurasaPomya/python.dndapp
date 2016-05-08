@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
 {% block head %}
 <title>{% block title %}{% endblock %} - Dectala's DnD App</title>
 {% endblock %}
 </head>
 <body>
-<a href="{{ url_for('index') }}">Dec's DnDApp</a>
-{% if current_user.is_anonymous %}
-<li><a href="{{ url_for('auth.login') }}">Sign in</a></li>
-{% endif %}
-{% if current_user.is_authenticated %}
-<li><a href="{{ url_for('spells.spell_list') }}">Spell list</a></li>
-<li><a href="{{ url_for('auth.create_user') }}">Create User</a></li>
-<li><a href="{{ url_for('auth.list_users') }}">User List</a></li>
-<li><a href="{{ url_for('tasks.list_tasks') }}">Task List</a></li>
-<li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
-{% endif %}
-</ul>
+<div class="pure-menu pure-menu-horizontal">
+    <a href="#" class="pure-menu-heading pure-menu-link">Dec\D&D</a>
+    <ul class="pure-menu-list">
+        {% if current_user.is_anonymous %}
+        <li class="pure-menu-item"><a href="{{ url_for('auth.login') }}" class="pure-menu-link">Sign in</a></li>
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        <li class="pure-menu-item"><a href="{{ url_for('spells.spell_list') }}" class="pure-menu-link">Spell list</a></li>
+        <li class="pure-menu-item"><a href="{{ url_for('auth.create_user') }}" class="pure-menu-link">Create User</a></li>
+        <li class="pure-menu-item"><a href="{{ url_for('auth.list_users') }}" class="pure-menu-link">User List</a></li>
+        <li class="pure-menu-item"><a href="{{ url_for('tasks.list_tasks') }}" class="pure-menu-link">Task List</a></li>
+        <li class="pure-menu-item"><a href="{{ url_for('auth.logout') }}" class="pure-menu-link">Log Out</a></li>
+        {% endif %}
+    </ul>
+</div>
 {% if current_user.is_authenticated %}
 Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)</p>
 {% endif %}
