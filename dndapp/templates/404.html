@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block title %}Not Found!{% endblock %}
 {% block content %}
-Not Found!<br />
-<img src="{{ url_for('static', filename='images/sadwizard.gif') }}">
-<p>Try the main page! <a href="{{ url_for('index') }}">Here</a></p>
+    <h1>Not Found!</h1>
+    <p>Try the main page! <a href="{{ url_for('index') }}">Here</a></p>
 {% endblock %}
