@@ -69,3 +69,6 @@ config.py
 venv/
 
 .idea/
+
+Ignore Database Files
+*.sqlite
