@@ -7,8 +7,11 @@ from dndapp.mod_auth.forms import LoginForm, CreateUserForm, ChangeUserPassword
 from dndapp.mod_auth.models import User
 
 
+# Blueprint name
 mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
 
+
+# Logout Route
 @mod_auth.route("/logout")
 @login_required
 def logout():
@@ -17,6 +20,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
+# Login route
 @mod_auth.route('/signin/', methods=['GET', 'POST'])
 def login():
 
@@ -47,12 +51,13 @@ def login():
 
     return render_template("auth/login.html", form=form)
 
+
+# Create user route
 @mod_auth.route('/createuser/', methods=['GET', 'POST'])
 @login_required
 def create_user():
 
     user = User.query.filter_by(id=session['user_id']).first()
-
 
     if user.role  == 0:
         # Check if form submitted
@@ -68,9 +73,10 @@ def create_user():
     else:
         return "You can't do this!"
 
-
     return render_template("auth/signup.html", form=form)
 
+
+# Change Password route
 @mod_auth.route('/user/change_password/', methods=['GET', 'POST'])
 @login_required
 def change_user_password():
@@ -92,6 +98,8 @@ def change_user_password():
 
     return render_template("auth/changepass.html", form=form)
 
+
+# User List Route
 @mod_auth.route('/user/list/')
 @login_required
 def list_users():
@@ -104,6 +112,8 @@ def list_users():
     else:
         return "You can't do this!"
 
+
+# Delete user route
 @mod_auth.route('/user/del/<userid>')
 @login_required
 def del_user(userid=None):
@@ -115,4 +125,3 @@ def del_user(userid=None):
         db.session.commit()
 
         return redirect(url_for('auth.list_users'))
-

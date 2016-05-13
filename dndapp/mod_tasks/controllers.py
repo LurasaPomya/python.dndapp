@@ -6,8 +6,11 @@ from dndapp.mod_auth.models import User
 from dndapp import db
 
 
+# Blueprint name
 mod_tasks = Blueprint('tasks', __name__, url_prefix='/tasks')
 
+
+# Tasks list route
 @mod_tasks.route('/list/')
 @login_required
 def list_tasks():
@@ -16,7 +19,9 @@ def list_tasks():
 
     return render_template('tasks/task_list.html',task_list=tasks)
 
-@mod_tasks.route('/add_task/', methods=['GET','POST'])
+
+# Create task route
+@mod_tasks.route('/add_task/', methods=['GET', 'POST'])
 @login_required
 def add_task():
 
@@ -40,11 +45,13 @@ def add_task():
             return redirect(url_for('tasks.list_tasks'))
     return render_template("tasks/create_task.html", form=form)
 
+
+# delete task route
 @mod_tasks.route('/modify_task/del/<taskid>')
 @login_required
 def del_task(taskid=None):
 
-    if taskid == None:
+    if taskid is None:
         return "Error!"
     else:
         task = Task.query.filter_by(id=taskid).first()

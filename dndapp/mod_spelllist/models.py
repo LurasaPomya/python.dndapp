@@ -1,11 +1,14 @@
 from dndapp import db
 
+
 # Base Class
 class Base(db.Model):
     __abstract__ = True
 
     id = db.Column(db.Integer, primary_key=True)
 
+
+# Spell Model
 class Spell(Base):
 
     __tablename__ = 'spells'

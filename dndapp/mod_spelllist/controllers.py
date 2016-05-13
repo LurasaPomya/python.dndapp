@@ -4,15 +4,17 @@ from flask import render_template, Blueprint, session
 from flask_login import login_required
 
 
+# Blueprint name
 mod_spells = Blueprint('spells', __name__, url_prefix='/spelllist')
 
 
+# Default route, spell list route, spell list by class route
 @mod_spells.route('/')
 @mod_spells.route('/<char_class>')
 @login_required
 def spell_list(char_class=None):
 
-    if char_class == None:
+    if char_class is None:
         spells = Spell.query.all()
     else:
         spells = Spell.query.filter(Spell.spell_class.contains(char_class)).order_by(Spell.level)
@@ -26,9 +28,11 @@ def spell_list(char_class=None):
 
     return render_template('spelllist/spell_list.html', spells=spells,show_desc=show_desc)
 
+
+# Individual spell route
 @mod_spells.route('/spell/<spell_name>')
 def spell_desc(spell_name=None):
-    if spell_name == None:
+    if spell_name is None:
         return "No Spell Selected!"
     else:
         spell = Spell.query.filter_by(name=spell_name).first()

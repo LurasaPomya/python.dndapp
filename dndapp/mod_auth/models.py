@@ -1,6 +1,7 @@
 from dndapp import db
 from flask_login import UserMixin
 
+
 # Base Class
 class Base(db.Model):
     __abstract__ = True
@@ -9,6 +10,8 @@ class Base(db.Model):
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
     date_modified = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
+
+# User model
 class User(Base, UserMixin):
 
     __tablename__ = 'users'
@@ -18,7 +21,6 @@ class User(Base, UserMixin):
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, default=True)
     role = db.Column(db.SmallInteger, nullable=False, default=0)
-
 
     def __init__(self, username, email, password, access_level):
         self.username = username
