@@ -24,15 +24,23 @@
                     <th>Name</th>
                     <th>Level</th>
                     <th>School</th>
+                    <th>Page #</th>
                 </tr>
             </thead>
             <tbody>
                 {% for spell in spells %}
+                    <tr><td>
                     {% if show_desc == True %}
-                        <tr><td><a href=" {{ url_for('spells.spell_desc', spell_name=spell.name) }} ">{{ spell.name }}</a></td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
-                    {% else %}
-                        <tr><td>{{ spell.name }}</td><td>{{ spell.level }}</td><td>{{ spell.school }}</td></tr>
+                        <a href=" {{ url_for('spells.spell_desc', spell_name=spell.name) }} ">
                     {% endif %}
+                    {{ spell.name }}
+                    {% if show_desc == True %}
+                        </a>
+                    {% endif %}
+                    {% if spell.ritual %}
+                        <small>(Ritual)</small>
+                    {% endif %}
+                    </td><td>{{ spell.level }}</td><td>{{ spell.school }}</td><td>{{ spell.page }}</td></tr>
                 {% endfor %}
             </tbody>
         </table>

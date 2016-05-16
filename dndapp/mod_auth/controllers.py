@@ -59,7 +59,7 @@ def create_user():
 
     user = User.query.filter_by(id=session['user_id']).first()
 
-    if user.role  == 0:
+    if user.role == 0:
         # Check if form submitted
         form = CreateUserForm(request.form)
         if form.validate_on_submit():
@@ -71,7 +71,7 @@ def create_user():
 
             return redirect(url_for('auth.list_users'))
     else:
-        return "You can't do this!"
+        return render_template('403.html'), 403
 
     return render_template("auth/signup.html", form=form)
 
@@ -110,7 +110,7 @@ def list_users():
 
         return render_template('auth/user_list.html',users=users)
     else:
-        return "You can't do this!"
+        return render_template('403.html'), 403
 
 
 # Delete user route
