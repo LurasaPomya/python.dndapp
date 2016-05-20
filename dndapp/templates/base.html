@@ -1,11 +1,5 @@
 {% macro render_field(field, placeholder=None) %}
-    {% if field.errors %}
-        <div>
-    {% elif field.flags.error %}
-        <div>
-    {% else %}
-        <div>
-    {% endif %}
+    <div>
     {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
     {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
     </div>
@@ -54,10 +48,11 @@
                         {% endif %}
                         {% if current_user.is_authenticated %}
                             <li class=""><a href="{{ url_for('spells.spell_list') }}">Spell list</a></li>
-                            <li class=""><a href="{{ url_for('auth.create_user') }}">Create User</a></li>
-                            <li class=""><a href="{{ url_for('auth.list_users') }}">User List</a></li>
-                            <li class=""><a href="{{ url_for('tasks.list_tasks') }}">Task List</a></li>
-                            <li class=""><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                            {% if session['user_level'] <= 1 %}
+                                <li class=""><a href="{{ url_for('auth.create_user') }}">Create User</a></li>
+                                <li class=""><a href="{{ url_for('auth.list_users') }}">User List</a></li>
+                                <li class=""><a href="{{ url_for('tasks.list_tasks') }}">Task List</a></li>
+                            {% endif %}
                         {% endif %}
 					</ul>
 				</div>
@@ -67,7 +62,12 @@
 		<!-- BEGIN MAIN CONTAINER -->
 		<div class="container">
             {% if session['username'] %}
-                <div id="username">Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)</div>
+                <div id="username">
+                    Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)
+                    {% if current_user.is_authenticated %}
+                        - <a href="{{ url_for('auth.logout') }}">Log Out</a>
+                    {% endif %}
+                </div>
             {% endif %}
             {% if form %}
                 {% if form.errors %}
@@ -75,13 +75,24 @@
                     {% for field, error in form.errors.items() %}
                         {% for e in error %}
                             <div class="alert alert-danger">
-                            {{ e }}
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                {{ e }}
                             </div>
                         {% endfor %}
                     {% endfor %}
                     </div>
                 {% endif %}
             {% endif %}
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-danger">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             {%  block content %}
             {% endblock %}
 		</div>

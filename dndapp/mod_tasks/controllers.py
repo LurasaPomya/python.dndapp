@@ -52,7 +52,9 @@ def add_task():
 def del_task(taskid=None):
 
     if taskid is None:
-        return "Error!"
+        flash("Problem removing task! PANIC!")
+
+        return redirect(url_for('tasks.list_tasks'))
     else:
         task = Task.query.filter_by(id=taskid).first()
         db.session.delete(task)

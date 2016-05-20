@@ -17,6 +17,7 @@ mod_auth = Blueprint('auth', __name__, url_prefix='/auth')
 def logout():
     logout_user()
     session.clear()
+    flash('Logged Out!')
     return redirect(url_for('auth.login'))
 
 
@@ -45,9 +46,11 @@ def login():
 
             next = request.args.get('next')
 
+            flash('Logged In!')
+
             return redirect(next or url_for('spells.spell_list'))
 
-        flash('Wrong email or password', 'error')
+        flash('Wrong email or password')
 
     return render_template("auth/login.html", form=form)
 
@@ -87,14 +90,18 @@ def change_user_password():
         user = User.query.filter_by(id=session['user_id']).first()
 
         if form.new_password.data != form.new_password_repeat.data:
-            return " New passwords do not match, try again!"
+            flash("New Passwords don't match")
+            return render_template("auth/changepass.html", form=form)
 
         if check_password_hash(user.password, form.current_password.data):
             user.password = generate_password_hash(form.new_password.data)
             db.session.commit()
-            return "User Updated!"
+            flash('Password Updated')
+
+            return render_template("auth/changepass.html", form=form)
         else:
-            return "Wrong Current Password"
+            flash("Wrong Current Password")
+            return render_template("auth/changepass.html", form=form)
 
     return render_template("auth/changepass.html", form=form)
 
@@ -123,5 +130,7 @@ def del_user(userid=None):
         user = User.query.filter_by(id=userid).first()
         db.session.delete(user)
         db.session.commit()
+
+        flash("User Deleted!")
 
         return redirect(url_for('auth.list_users'))
