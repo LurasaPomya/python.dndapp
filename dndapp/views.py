@@ -1,5 +1,6 @@
 from dndapp import app, lm
-from flask import render_template
+from functools import wraps
+from flask import render_template, session
 from .mod_auth.models import User
 
 
@@ -25,3 +26,24 @@ def load_user(id):
 def check_user_level(user_id):
     user = User.query.filter_by(id=user_id)
     return user.role
+
+
+def admin_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        user = User.query.filter_by(id=session['user_id']).first()
+        if not user.is_admin:
+            return render_template('403.html'), 403
+        return func(*args, **kwargs)
+
+    return decorated_view
+
+def verified_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        user = User.query.filter_by(id=session['user_id']).first()
+        if not user.is_verified:
+            return render_template('403.html'), 403
+        return func(*args, **kwargs)
+
+    return decorated_view

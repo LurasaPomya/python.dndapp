@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from dndapp import db, lm
 from dndapp.mod_auth.forms import LoginForm, CreateUserForm, ChangeUserPassword
 from dndapp.mod_auth.models import User
+from dndapp.views import admin_required
 
 
 # Blueprint name
@@ -37,7 +38,7 @@ def login():
 
             session['user_id'] = user.id
             session['username'] = user.username
-            session['user_level'] = user.role
+            session['is_admin'] = user.is_admin
 
             if request.form.get('remember_me'):
                 login_user(user, remember=True)
@@ -58,24 +59,20 @@ def login():
 # Create user route
 @mod_auth.route('/createuser/', methods=['GET', 'POST'])
 @login_required
+@admin_required
 def create_user():
+    # Check if form submitted
+    form = CreateUserForm(request.form)
+    if form.validate_on_submit():
+        password = generate_password_hash(form.password.data)
+        user = User(form.username.data, form.email.data, password)
+        user.active = True
+        user.is_admin = False
+        user.is_verified = False
+        db.session.add(user)
+        db.session.commit()
 
-    user = User.query.filter_by(id=session['user_id']).first()
-
-    if user.role == 0:
-        # Check if form submitted
-        form = CreateUserForm(request.form)
-        if form.validate_on_submit():
-            password = generate_password_hash(form.password.data)
-            user = User(form.username.data, form.email.data, password, form.access_level.data)
-            user.active = True
-            db.session.add(user)
-            db.session.commit()
-
-            return redirect(url_for('auth.list_users'))
-    else:
-        return render_template('403.html'), 403
-
+        return redirect(url_for('auth.list_users'))
     return render_template("auth/signup.html", form=form)
 
 
@@ -109,22 +106,20 @@ def change_user_password():
 # User List Route
 @mod_auth.route('/user/list/')
 @login_required
+@admin_required
 def list_users():
+    users = User.query.all()
 
-    user = User.query.filter_by(id=session['user_id']).first()
-    if user.role == 0:
-        users = User.query.all()
-
-        return render_template('auth/user_list.html',users=users)
-    else:
-        return render_template('403.html'), 403
+    return render_template('auth/user_list.html', users=users)
 
 
 # Delete user route
 @mod_auth.route('/user/del/<userid>')
 @login_required
+@admin_required
 def del_user(userid=None):
     if userid is None:
+        flash("Problem Deleting User")
         return redirect(url_for('auth.list_users'))
     else:
         user = User.query.filter_by(id=userid).first()
@@ -134,3 +129,12 @@ def del_user(userid=None):
         flash("User Deleted!")
 
         return redirect(url_for('auth.list_users'))
+
+
+@mod_auth.route('/user/access/<level>')
+@login_required
+@admin_required
+def change_user_level(level=None):
+    if level is None:
+        flash("Problem Changing User Level")
+        redirect(url_for('auth.list_users'))

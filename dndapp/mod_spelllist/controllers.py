@@ -1,5 +1,6 @@
 from dndapp.mod_spelllist.models import Spell
 from dndapp.mod_auth.models import User
+from dndapp.views import verified_required
 from flask import render_template, Blueprint, session
 from flask_login import login_required
 
@@ -21,7 +22,7 @@ def spell_list(char_class=None, sortby=None):
 
     user = User.query.filter_by(id=session['user_id']).first()
 
-    if user.role < 5:
+    if user.is_verified:
         show_desc = True
     else:
         show_desc = False

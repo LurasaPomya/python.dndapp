@@ -585,8 +585,7 @@
 
                 var dynamicExp = "var sortWrapper = function(a,b) {",
                     l = sortList.length;
-
-                // TODO: inline functions.
+                
                 for (var i = 0; i < l; i++) {
 
                     var c = sortList[i][0];

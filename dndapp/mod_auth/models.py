@@ -20,10 +20,10 @@ class User(Base, UserMixin):
     email = db.Column(db.String(128), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.Boolean, default=True)
-    role = db.Column(db.SmallInteger, nullable=False, default=0)
+    is_admin = db.Column(db.Boolean, default=False)
+    is_verified = db.Column(db.Boolean, default=False)
 
-    def __init__(self, username, email, password, access_level):
+    def __init__(self, username, email, password):
         self.username = username
         self.email = email
         self.password = password
-        self.role = access_level
