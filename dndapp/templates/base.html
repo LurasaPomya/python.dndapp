@@ -1,4 +1,4 @@
-{% macro render_field(field, placeholder=None) %}
+﻿{% macro render_field(field, placeholder=None) %}
     <div>
     {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
     {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
@@ -68,14 +68,14 @@
                             <!-- END ADMIN MENU -->
                         {% endif %}
 					</ul>
-                <p class="navbar-text navbar-right"><a href="#" class="navbar-link">
+                <p class="navbar-text navbar-right">
                        {% if session['username'] %}
                                 Logged in as {{ session['username'] }}(<a href="{{ url_for('auth.change_user_password') }}">Change Password</a>)
                                 {% if current_user.is_authenticated %}
                                     - <a href="{{ url_for('auth.logout') }}">Log Out</a>
                                 {% endif %}
                         {% endif %}
-                </a></p>
+                </p>
 				</div>
 			</div>
 		</nav>

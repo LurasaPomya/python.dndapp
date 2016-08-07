@@ -134,7 +134,15 @@ def del_user(userid=None):
 @mod_auth.route('/user/access/<level>')
 @login_required
 @admin_required
-def change_user_level(level=None):
-    if level is None:
-        flash("Problem Changing User Level")
-        redirect(url_for('auth.list_users'))
+def verify_user(userid=None):
+    if userid is None:
+        flash("Problem Verifying User")
+        return redirect(url_for('auth.list_users'))
+    else:
+        user = User.query.filter_by(id=userid).first()
+        user.is_verified = True
+        db.session.commit()
+
+        flash("User Verified!")
+
+        return redirect(url_for('auth.list_users'))
