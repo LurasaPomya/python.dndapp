@@ -65,6 +65,9 @@ target/
 #config file
 config.py
 
+# Other files I want ignored
+runserver.sh
+
 #virtual environment
 venv/
 
