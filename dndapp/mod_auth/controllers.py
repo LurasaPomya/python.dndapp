@@ -131,7 +131,7 @@ def del_user(userid=None):
         return redirect(url_for('auth.list_users'))
 
 
-@mod_auth.route('/user/access/<level>')
+@mod_auth.route('/user/verify/<userid>')
 @login_required
 @admin_required
 def verify_user(userid=None):
