@@ -4,7 +4,7 @@ from dndapp.mod_tasks.models import Task
 from dndapp.mod_tasks.forms import CreateTaskForm
 from dndapp.mod_auth.models import User
 from dndapp import db
-from dndapp.views import admin_required, check_verified
+from dndapp.views import admin_required, check_verified, check_admin
 
 # Blueprint name
 mod_tasks = Blueprint('tasks', __name__, url_prefix='/tasks')

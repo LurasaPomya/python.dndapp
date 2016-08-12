@@ -1,6 +1,6 @@
 from dndapp.mod_spelllist.models import Spell
 from dndapp.mod_auth.models import User
-from dndapp.views import verified_required, check_verified
+from dndapp.views import verified_required, check_verified, check_admin
 from flask import render_template, Blueprint, session
 from flask_login import login_required
 
