@@ -34,7 +34,7 @@ def login():
 
         user = User.query.filter_by(username=form.username.data).first()
 
-        if user and check_password_hash(user.password, form.password.data):
+        if user and check_password_hash(user.password, form.password.data) and user.active == True:
 
             session['user_id'] = user.id
             session['username'] = user.username
@@ -131,18 +131,33 @@ def del_user(userid=None):
         return redirect(url_for('auth.list_users'))
 
 
-@mod_auth.route('/user/verify/<userid>')
+@mod_auth.route('/user/modify/<userid>/<attribute>')
 @login_required
 @admin_required
-def verify_user(userid=None):
-    if userid is None:
-        flash("Problem Verifying User")
+def toggle_verify(userid=None, attribute=None):
+    if userid is None or attribute is None:
+        flash("Problem Modifying User")
         return redirect(url_for('auth.list_users'))
     else:
         user = User.query.filter_by(id=userid).first()
-        user.is_verified = True
+        if attribute == "verify":
+            if user.is_verified == True:
+                user.is_verified = False
+            else:
+                user.is_verified = True
+        elif attribute == "active":
+            if user.active == True:
+                user.active = False
+            else:
+                user.active = True        
+        elif attribute == "admin":
+            if user.is_admin == True:
+                user.is_admin = False
+            else:
+                user.is_admin = True        
+                    
         db.session.commit()
 
-        flash("User Verified!")
+        flash("User Modified!")
 
         return redirect(url_for('auth.list_users'))

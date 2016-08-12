@@ -18,7 +18,12 @@
             </thead>
             <tbody>
                 {% for user in users %}
-                    <tr><td>{{ user.username }}</td><td>{{ user.email }}</td><td>{{ user.is_admin }}</td><td>{{ user.is_verified }}</td><td>{{ user.active }}</td><td><a href="{{ url_for('auth.del_user', userid = user.id) }}">Delete</a><br /><a href="{{ url_for('auth.verify_user', userid = user.id) }}">Verify User</a></td></tr>
+                    <tr><td>{{ user.username }}</td><td>{{ user.email }}</td><td>{{ user.is_admin }}</td><td>{{ user.is_verified }}</td><td>{{ user.active }}</td><td>
+                        <a href="{{ url_for('auth.del_user', userid = user.id) }}">Delete</a><br />
+                        <a href="{{ url_for('auth.toggle_verify', userid = user.id, attribute = "verify") }}">Toggle Verification</a><br />
+                        <a href="{{ url_for('auth.toggle_verify', userid = user.id, attribute = "active") }}">Toggle Active</a><br />
+                        <a href="{{ url_for('auth.toggle_verify', userid = user.id, attribute = "admin") }}">Toggle Admin</a>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>

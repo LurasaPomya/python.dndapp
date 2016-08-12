@@ -77,3 +77,40 @@ def task_view(taskid=None):
             return render_template('tasks/task_desc.html', task=task)
         else:
             return render_template('404.html'), 404
+
+# Mark Finished task route
+@mod_tasks.route('/modify_task/close/<taskid>')
+@login_required
+@admin_required
+def task_close(taskid=None):
+
+    if taskid is None:
+        flash("Problem closing task! PANIC!")
+
+        return redirect(url_for('tasks.task_list'))
+    else:
+        task = Task.query.filter_by(id=taskid).first()
+        task.finished = True
+        db.session.commit()
+        flash("Task Closed!")
+
+        return redirect(url_for('tasks.task_list'))
+
+
+# Reopen Finished task route
+@mod_tasks.route('/modify_task/open/<taskid>')
+@login_required
+@admin_required
+def task_open(taskid=None):
+
+    if taskid is None:
+        flash("Problem opening task! PANIC!")
+
+        return redirect(url_for('tasks.task_list'))
+    else:
+        task = Task.query.filter_by(id=taskid).first()
+        task.finished = False
+        db.session.commit()
+        flash("Task Opened!")
+
+        return redirect(url_for('tasks.task_list'))

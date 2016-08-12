@@ -14,3 +14,4 @@ PyYAML==3.10
 SQLAlchemy==1.0.12
 Werkzeug==0.11.9
 WTForms==2.1
+Flask-Migrate==2.0.0

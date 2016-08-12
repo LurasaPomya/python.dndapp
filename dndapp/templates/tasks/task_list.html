@@ -17,7 +17,22 @@
         </thead>
         <tbody>
             {% for task in task_list %}
-                    <tr><td>{{ task.date_created }}</td><td><a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>{% if admin == True %}<a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>{% endif %}</td></tr>
+                <tr><td>{{ task.date_created }}</td><td>
+                {% if task.finished == False %}
+                    <a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a>
+                {% else %}
+                    <strike>{{ task.title }}</strike>
+                {% endif %}
+                </td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>
+                {% if admin == True %}
+                    <a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>
+                    {% if task.finished == False %}
+                        <br /><a href="{{ url_for('tasks.task_close', taskid=task.id) }}">Mark Finished</a>
+                    {% else %}
+                        <br /><a href="{{ url_for('tasks.task_open', taskid=task.id) }}">Reopen</a>
+                    {% endif %}
+                {% endif %}
+                </td></tr>
             {% endfor %}
         </tbody>
     </table>
