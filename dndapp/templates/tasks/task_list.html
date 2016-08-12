@@ -8,6 +8,7 @@
     <table id="table" class="tablesorter table">
         <thead>
             <tr>
+                <th>Created</th>
                 <th>Title</th>
                 <th>Description</th>
                 <th>Priority</th>
@@ -16,7 +17,7 @@
         </thead>
         <tbody>
             {% for task in task_list %}
-                    <tr><td><a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>{% if admin == True %}<a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>{% endif %}</td></tr>
+                    <tr><td>{{ task.date_created }}</td><td><a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>{% if admin == True %}<a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>{% endif %}</td></tr>
             {% endfor %}
         </tbody>
     </table>

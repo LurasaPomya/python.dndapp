@@ -18,7 +18,7 @@ class Task(Base, UserMixin):
 
     title = db.Column(db.String(255), nullable=False, unique=True)
     description = db.Column(db.Text(), nullable=False)
-    priority = db.Column(db.String(5), nullable=False)
+    priority = db.Column(db.String(10), nullable=False)
 
     def __init__(self, title, desc, priority):
         self.title = title

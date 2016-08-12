@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}View: {{ task.title }}{% endblock %}
 {% block content %}
-    <h3>{{ task.title }}</h3>
+    <h3>{{ task.title }} - {{ task.date_created }}</h3>
     <br />
     <u>Description:</u>
     <br />
