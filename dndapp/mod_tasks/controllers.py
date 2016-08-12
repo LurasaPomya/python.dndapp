@@ -16,12 +16,9 @@ mod_tasks = Blueprint('tasks', __name__, url_prefix='/tasks')
 def task_list():
 
     tasks = Task.query.all()
+    admin = check_admin()
 
-    user = User.query.filter_by(id=session['user_id']).first()
-
-    verified = check_verified()
-
-    return render_template('tasks/task_list.html',task_list=tasks, verified=verified)
+    return render_template('tasks/task_list.html',task_list=tasks, admin=admin)
 
 
 # Create task route

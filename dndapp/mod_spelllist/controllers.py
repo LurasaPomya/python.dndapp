@@ -20,8 +20,6 @@ def spell_list(char_class=None, sortby=None):
     else:
         spells = Spell.query.filter(Spell.spell_class.contains(char_class)).order_by(Spell.level)
 
-    user = User.query.filter_by(id=session['user_id']).first()
-
     verified = check_verified()
 
     return render_template('spelllist/spell_list.html', spells=spells,verified=verified)

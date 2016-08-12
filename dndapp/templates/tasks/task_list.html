@@ -16,11 +16,11 @@
         </thead>
         <tbody>
             {% for task in task_list %}
-                    <tr><td><a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>{% if verified == True %}<a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>{% endif %}</td></tr>
+                    <tr><td><a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>{% if admin == True %}<a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>{% endif %}</td></tr>
             {% endfor %}
         </tbody>
     </table>
-    {% if verified == True %}
+    {% if admin == True %}
         <br />
         <a href="{{ url_for('tasks.add_task') }}">Add Task</a>
     {% endif %}        

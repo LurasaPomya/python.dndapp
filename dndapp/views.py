@@ -32,6 +32,15 @@ def check_verified():
     else:
         return False
 
+def check_admin():
+
+    user = User.query.filter_by(id=session['user_id']).first()
+
+    if user.is_admin:
+        return True
+    else:
+        return False
+
 
 def admin_required(func):
     @wraps(func)
