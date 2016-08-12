@@ -23,9 +23,14 @@ def load_user(id):
 
 
 # Custom functions and routes
-def check_user_level(user_id):
-    user = User.query.filter_by(id=user_id)
-    return user.role
+def check_verified():
+
+    user = User.query.filter_by(id=session['user_id']).first()
+
+    if user.is_verified:
+        return True
+    else:
+        return False
 
 
 def admin_required(func):

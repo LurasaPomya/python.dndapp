@@ -36,11 +36,11 @@
             <tbody>
                 {% for spell in spells %}
                     <tr><td>
-                    {% if show_desc == True %}
+                    {% if verified == True %}
                         <a href=" {{ url_for('spells.spell_desc', spell_name=spell.name) }} ">
                     {% endif %}
                     {{ spell.name }}
-                    {% if show_desc == True %}
+                    {% if verified == True %}
                         </a>
                     {% endif %}
                     {% if spell.ritual %}

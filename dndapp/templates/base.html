@@ -55,6 +55,7 @@
                         {% endif %}
                         {% if current_user.is_authenticated %}
                             <li class=""><a href="{{ url_for('spells.spell_list') }}">Spell list</a></li>
+                            <li class=""><a href="{{ url_for('tasks.task_list') }}">Task Lists</a></li>
                             <!-- BEGIN ADMIN MENU -->
                             {% if session['is_admin'] %}
                             <li class="dropdown">

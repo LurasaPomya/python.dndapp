@@ -1,6 +1,6 @@
 from dndapp.mod_spelllist.models import Spell
 from dndapp.mod_auth.models import User
-from dndapp.views import verified_required
+from dndapp.views import verified_required, check_verified
 from flask import render_template, Blueprint, session
 from flask_login import login_required
 
@@ -22,17 +22,15 @@ def spell_list(char_class=None, sortby=None):
 
     user = User.query.filter_by(id=session['user_id']).first()
 
-    if user.is_verified:
-        show_desc = True
-    else:
-        show_desc = False
+    verified = check_verified()
 
-    return render_template('spelllist/spell_list.html', spells=spells,show_desc=show_desc)
+    return render_template('spelllist/spell_list.html', spells=spells,verified=verified)
 
 
 # Individual spell route
 @mod_spells.route('/spell/<spell_name>')
 @login_required
+@verified_required
 def spell_desc(spell_name=None):
     if spell_name is None:
         return render_template('404.html'), 404

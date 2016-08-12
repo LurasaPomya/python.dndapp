@@ -1,14 +1,15 @@
 {%  extends 'base.html' %}
+{% block title %}Add Task{% endblock %}
 {% block content %}
     <div>
         <div>
-            <legend>Add Task</legend>
+            Add Task
             <form method="POST" action="." accept-charset="UTF-8" role="form">
                 {{ form.csrf_token }}
                 {{ render_field(form.title, placeholder="Title", autofocus="") }}
                 {{ render_field(form.description, placeholder="Description") }}
                 {{ render_field(form.priority, placeholder="Priority") }}
-                <button type="submit" name="submit">Sign up</button>
+                <button type="submit" name="submit">Create Task</button>
             </form>
         </div>
     </div>

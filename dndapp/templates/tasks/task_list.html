@@ -5,20 +5,23 @@
 {% endblock %}
 
 {% block content %}
-        <table id="table" class="tablesorter table">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Priority</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in task_list %}
-                    <tr><td><a href="{{ url_for('tasks.del_task', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td></tr>
-                {% endfor %}
-                <br />
-                <a href="{{ url_for('tasks.add_task') }}">Add Task</a>
-            </tbody>
-        </table>
+    <table id="table" class="tablesorter table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Priority</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in task_list %}
+                    <tr><td><a href="{{ url_for('tasks.task_view', taskid=task.id) }}">{{ task.title }}</a></td><td>{{ task.description }}</td><td>{{ task.priority }}</td><td>{% if verified == True %}<a href="{{ url_for('tasks.task_del', taskid=task.id) }}">Delete</a>{% endif %}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if verified == True %}
+        <br />
+        <a href="{{ url_for('tasks.add_task') }}">Add Task</a>
+    {% endif %}        
 {% endblock %}

@@ -1,0 +1,36 @@
+﻿# Remove if you do not want to force SSL. You could also just comment out this block too...
+server {
+    listen 80;
+    server_name servername.com;
+    rewrite ^ https://$http_host$request_uri? permanent;
+}
+
+server {
+    listen 443;
+    ssl on;
+
+	# Comment out the above 2 lines and uncomment these if you disabled SSL
+	# listen 80; 
+
+	# Comment out if you don't plan to use SSL
+    ssl_certificate /etc/letsencrypt/live/alechnor.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/alechnor.com/privkey.pem;
+
+    server_name servername.com;
+
+    root /path/to/files;
+    location / {
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        if (!-f $request_filename) {
+            proxy_pass http://127.0.0.1:5001;
+            break;
+        }
+    }
+
+    #location /static {
+    #    alias  /home/deploy/sites/flaskdeploy/static/;
+    #    autoindex on;
+    #}
+}
