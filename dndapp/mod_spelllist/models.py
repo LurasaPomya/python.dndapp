@@ -1,6 +1,5 @@
 from dndapp import db
 
-
 # Base Class
 class Base(db.Model):
     __abstract__ = True

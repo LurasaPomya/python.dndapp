@@ -4,7 +4,7 @@ DEBUG = True # REMOVE BEFORE PRODUCTION
 SQLALCHEMY_DATABASE_URI = "mysql://username:password@localhost/database"
 
 # Other DB Settings
-SQLALCHEMY_TRACK_MODIFICATIONS = False
+SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # Form Stuff
 WTF_CSRF_ENABLED = True

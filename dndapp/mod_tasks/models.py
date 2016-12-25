@@ -21,8 +21,9 @@ class Task(Base, UserMixin):
     priority = db.Column(db.String(10), nullable=False)
     finished = db.Column(db.Boolean, default=False)
 
-    def __init__(self, title, desc, priority):
+    def __init__(self, title, desc, priority, finished):
         self.title = title
         self.description = desc
         self.priority = priority
+        self.finished = finished
 
