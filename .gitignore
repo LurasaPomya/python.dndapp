@@ -73,5 +73,10 @@ venv/
 
 .idea/
 
-Ignore Database Files
+# Ignore Database Files
 *.sqlite
+
+# Ignore css we can just grab on our own.
+dndapp/static/js/
+dndapp/static/fonts/
+dndapp/static/css/

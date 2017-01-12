@@ -36,7 +36,7 @@ def add_task():
         description = form.description.data
         priority = form.priority.data
 
-        task = Task(title,description,priority)
+        task = Task(title,description,priority,False)
 
         db.session.add(task)
         db.session.commit()
